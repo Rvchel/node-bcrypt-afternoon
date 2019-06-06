@@ -8,17 +8,17 @@ async function register(req, res) {
     if (existingUser) {
         res.status(409).json({error: 'Username Taken'});
     }
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt);
-        const registeredUser = await db.register_user([isAdmin, username, hash]);
-        const user = registeredUser[0];
-        req.session.user = {
-            isAdmin: user.is_admin,
-            username: user.username,
-            id: user.id
-        };
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    const registeredUser = await db.register_user([isAdmin, username, hash]);
+    const user = registeredUser[0];
+    req.session.user = {
+        isAdmin: user.is_admin,
+        username: user.username,
+        id: user.id
+    };
         res.status(201).json(req.session.user);
-    
+
 };
 
 
